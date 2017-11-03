@@ -25,8 +25,8 @@ type hvt=record val,idx:longword; end;
 		//srch - last find hashed
 		total,lll,c,srch,iii:longword;
 		
-		//iii - last index, == c, != h(то есть следующий за требуемым элемент) 1 3 8 12 15 при поиске 10 вернет 4 то есть элемент с значением 12
-		//last_val - последнее значение сравниваемого элемента, hash_val[c].val / hash_val[h].val
+		//c == c, != h(С‚Рѕ РµСЃС‚СЊ СЃР»РµРґСѓСЋС‰РёР№ Р·Р° С‚СЂРµР±СѓРµРјС‹Рј СЌР»РµРјРµРЅС‚) 1 3 8 12 15 РїСЂРё РїРѕРёСЃРєРµ 10 РІРµСЂРЅРµС‚ 4 С‚Рѕ РµСЃС‚СЊ СЌР»РµРјРµРЅС‚ СЃ Р·РЅР°С‡РµРЅРёРµРј 12
+		//last_val - РїРѕСЃР»РµРґРЅРµРµ Р·РЅР°С‡РµРЅРёРµ СЃСЂР°РІРЅРёРІР°РµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р°, hash_val[c].val / hash_val[h].val
 		last_val:longword;
 
 		constructor init;
@@ -50,9 +50,6 @@ var showdebug:boolean=false;
 implementation
 
 const
-  // Adler checksum
-  Base = longword(65521);       // largest prime smaller than 65536
-  NMAX = 3854;                  // Code with signed 32 bit integer
   delta_arr=100;
   
 var ______tmp:hashtab;
@@ -73,46 +70,6 @@ begin
        end;
 end;
 
-{
-//longword = unsigned 32bit
-//string to adler32 checksum
-function Adler32s(s:string): longword;
-var
-  s1, s2,Adler,Len,i: longword;
-  K: Integer;
-
-begin
-  Adler:=0;
-  i:=0;
-  
-  s1 := Adler and $FFFF;
-  s2 := (Adler shr 16) and $FFFF;
-  len:=length(s);
-
-  if len = 0 then Result := 1
-                  else
-  begin
-    while Len > 0 do
-    begin
-      if Len < NMAX then K := Len
-                    else K := NMAX;
-      Dec(Len, K);
-      while K > 0 do
-      begin
-        inc(i);
-
-		Inc(s1,ord(s[i]));
-
-        Inc(s2, s1);
-        Dec(K);
-      end;
-      s1 := s1 mod Base;
-      s2 := s2 mod Base;
-    end;
-    Result := (s2 shl 16) or s1;
-  end;
-end;
-}
 
 Function X31Hash(const s:string):LongWord;
 var i,h:longword;
@@ -157,7 +114,7 @@ begin
 end;
 
 
-//вызывается всегда после удаления и после добавления элемента
+//РІС‹Р·С‹РІР°РµС‚СЃСЏ РІСЃРµРіРґР° РїРѕСЃР»Рµ СѓРґР°Р»РµРЅРёСЏ Рё РїРѕСЃР»Рµ РґРѕР±Р°РІР»РµРЅРёСЏ СЌР»РµРјРµРЅС‚Р°
 //shall's sort hash_val by val
 procedure hashtab.sort_hv_del;
 var mx:longword;
@@ -184,7 +141,7 @@ begin
 end;
 
 
-//del Можно и оставить, но add можно и
+//del РњРѕР¶РЅРѕ Рё РѕСЃС‚Р°РІРёС‚СЊ, РЅРѕ add РјРѕР¶РЅРѕ Рё
 procedure hashtab.sort_hv_add(var idx_idx:longword);
 var i:longword;
     h:hvt;
@@ -200,7 +157,7 @@ begin
 	if idx_idx = 1 then begin
 		if hash_val[0].val>hash_val[1].val then
 		begin
-			//переставить местами
+			//РїРµСЂРµСЃС‚Р°РІРёС‚СЊ РјРµСЃС‚Р°РјРё
 			h:=hash_val[0];
 			hash_val[0]:=hash_val[1];
 			hash_val[1]:=h;
@@ -209,8 +166,8 @@ begin
 	else
 	begin
 
-	  //после вставки элемента с индексом idx_idx, total++. [idx_idx] - последний вставленный
-	  //с - c from last bin search (c если найдено, но у меня всегда не найдено и c = h, надо сдвинуть всех начиная с h на 1 элемент правее. место уже зарезервировано. в [h] записать новый хэш)
+	  //РїРѕСЃР»Рµ РІСЃС‚Р°РІРєРё СЌР»РµРјРµРЅС‚Р° СЃ РёРЅРґРµРєСЃРѕРј idx_idx, total++. [idx_idx] - РїРѕСЃР»РµРґРЅРёР№ РІСЃС‚Р°РІР»РµРЅРЅС‹Р№
+	  //СЃ - c from last bin search (c РµСЃР»Рё РЅР°Р№РґРµРЅРѕ, РЅРѕ Сѓ РјРµРЅСЏ РІСЃРµРіРґР° РЅРµ РЅР°Р№РґРµРЅРѕ Рё c = h, РЅР°РґРѕ СЃРґРІРёРЅСѓС‚СЊ РІСЃРµС… РЅР°С‡РёРЅР°СЏ СЃ h РЅР° 1 СЌР»РµРјРµРЅС‚ РїСЂР°РІРµРµ. РјРµСЃС‚Рѕ СѓР¶Рµ Р·Р°СЂРµР·РµСЂРІРёСЂРѕРІР°РЅРѕ. РІ [h] Р·Р°РїРёСЃР°С‚СЊ РЅРѕРІС‹Р№ С…СЌС€)
 
 	  h:=hash_val[idx_idx];
 
@@ -478,10 +435,10 @@ begin
        for i:=0 to ilst do
           if ordr[i]=ikill then begin tokill:=i;break; end;
 
-       //ikill - индекс в keys
-       //tokill - индекс в ordr
-       //lst - в keys
-       //ilst - в ordr
+       //ikill - РёРЅРґРµРєСЃ РІ keys
+       //tokill - РёРЅРґРµРєСЃ РІ ordr
+       //lst - РІ keys
+       //ilst - РІ ordr
 
        for i:=tokill to ilst-1 do ordr[i]:=ordr[i+1];
        for i:=0 to ilst do
