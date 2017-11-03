@@ -6,8 +6,8 @@ uses
   hashtabs,SysUtils;
 
 const z='01234567890abcdefghijklmnopqrstuvwxyz';
-//total_els = 10000000; //10m
-total_els = 20;
+total_els = 10000000; //10m
+//total_els = 20;
 
 var _post:hashtab;
     i,ii,j,a:longword;
@@ -41,11 +41,11 @@ begin
  while a<=total_els do begin
     a:=a+1;
 
-    i:=random(10)+1;//êîëè÷ ñèìâîëîâ â êëþ÷å
+    i:=random(10)+1;//ÃªÃ®Ã«Ã¨Ã· Ã±Ã¨Ã¬Ã¢Ã®Ã«Ã®Ã¢ Ã¢ ÃªÃ«Ã¾Ã·Ã¥
     k:='';
     //for j:=1 to i do k:=k+z[random(ii)+1];
     str(a,k);
-    i:=random(50)+1;//êîëè÷ ñèìâîëîâ â çíà÷åíèè
+    i:=random(50)+1;//ÃªÃ®Ã«Ã¨Ã· Ã±Ã¨Ã¬Ã¢Ã®Ã«Ã®Ã¢ Ã¢ Ã§Ã­Ã Ã·Ã¥Ã­Ã¨Ã¨
     v:='';
     for j:=1 to i do v:=v+z[random(ii)+1];
 
