@@ -50,7 +50,7 @@ begin
     for j:=1 to i do v:=v+z[random(ii)+1];
 
      _post.setval(k,v);
-    if a mod 100=0 then begin writeln(a);
+    if a mod 100000=0 then begin writeln(a);
     tim3:=tim2;
     tim2:=DateTimeToTimeStamp(Time);
     writeln('delta time ',(tim2.time-tim3.time),' total time ',(tim3.time-tim1.time));
@@ -61,7 +61,7 @@ begin
  writeln('total=',_post.total,' lll=',_post.lll);
     end;
  end;
-
+{
  readln;
  
  show_keys_vals;
@@ -70,4 +70,5 @@ begin
 
  show_keys_vals;
  readln;
+ }
 end.
