@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="10"/>
+    <BuildModes Active="Default"/>
+    <Units Count="2">
+      <Unit0>
+        <Filename Value="filltest_l.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="3" Y="10"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="hashtabs.pas"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="9" Y="193"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit1>
+    </Units>
+    <JumpHistory Count="5" HistoryIndex="4">
+      <Position1>
+        <Filename Value="hashtabs.pas"/>
+      </Position1>
+      <Position2>
+        <Filename Value="hashtabs.pas"/>
+        <Caret Line="149" Column="7" TopLine="135"/>
+      </Position2>
+      <Position3>
+        <Filename Value="hashtabs.pas"/>
+        <Caret Line="163" Column="7" TopLine="149"/>
+      </Position3>
+      <Position4>
+        <Filename Value="hashtabs.pas"/>
+        <Caret Line="227" Column="8" TopLine="213"/>
+      </Position4>
+      <Position5>
+        <Filename Value="hashtabs.pas"/>
+        <Caret Line="14" Column="22"/>
+      </Position5>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>
